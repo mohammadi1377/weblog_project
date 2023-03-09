@@ -1,12 +1,12 @@
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Column
-from sqlalchemy.types import String, Integer, Text
-from DataBase.my_database import Base
+from sqlalchemy.types import String, Integer, Text, TIMESTAMP
+from .DataBase.my_database import Base
 
 
 class User(Base):
-    __tablename__ = "user"
+    __tablename__ = "users"
     user_id = Column(Integer, primary_key=True, index=True)
     user_role = Column(String(20))
     user_name = Column(String(20), unique=True)
@@ -17,14 +17,14 @@ class User(Base):
 class Post(Base):
     __tablename__ = "post"
     post_id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey("user.user_id"))
+    # user_id = Column(Integer, ForeignKey("user.user_id"))
     post_url = Column(String(100), unique=True)
     post_title = Column(String(20))
     post_image = Column(String(20))
     post_content = Column(Text)
-    post_date = Column(String(20))
-    post_modified = Column(String(100))
-    category = relationship("Category", back_populates="post")
+    post_date = Column(TIMESTAMP)
+    post_modified = Column(TIMESTAMP)
+    # category = relationship("Category", back_populates="post")
 
 
 class Comment(Base):
@@ -44,4 +44,4 @@ class Category(Base):
     category_url = Column(String(100), unique=True)
     category_name = Column(String(20))
     category_summary = Column(Text)
-    post = relationship("Post", back_populates="category")
+    # post = relationship("Post", back_populates="category")

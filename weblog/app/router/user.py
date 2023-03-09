@@ -34,6 +34,7 @@ def create_user(user: UserSchema, db: Session = Depends(get_db)):
 
     return new_user
 
+
 @router.patch("/user/{id}", response_model=UserSchema, status_code=200)
 async def update(user_id: int, user: UserSchema, db: Session = Depends(get_db)):
     update_user = db.query(User).get(user_id)
@@ -55,6 +56,7 @@ async def delete_user(user_id: int, db: Session = Depends(get_db)):
     db.delete(db_delete)
     db.commit()
     return None
+
 
 def check_if_exists(user, user_id):
     if user is None:

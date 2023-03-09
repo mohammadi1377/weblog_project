@@ -1,7 +1,9 @@
 from fastapi import FastAPI
 from .router import post, root
+from .DataBase.my_database import Base, engine
 
 
+Base.metadata.create_all(bind=engine)
 title = "Blog FastAPI"
 description = f"""
 {title} helps you do awesome stuff. 🚀
