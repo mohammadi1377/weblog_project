@@ -1,17 +1,17 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from ..DataBase.my_database import get_db
 from sqlalchemy.orm import Session
-from ..schema import PostSchema
+from ..schema import PostSchema, PostSchemaOut
 from ..modules import Post
 from typing import List
 
 router = APIRouter(
-    prefix="/v1/posts",
+    prefix="/posts",
     tags=["Posts"]
 )
 
 
-@router.get("/post/{id}", response_model=PostSchema, status_code=200)
+@router.get("/post/{id}", response_model=PostSchemaOut, status_code=200)
 async def get_post(post_id: int, db: Session = Depends(get_db)):
     db_post = db.query(Post).get(post_id)
 

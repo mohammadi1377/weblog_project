@@ -25,7 +25,6 @@ class Post(Base):
     post_content = Column(Text)
     post_date = Column(TIMESTAMP)
     post_modified = Column(TIMESTAMP)
-    # category = relationship("Category", back_populates="post")
 
 
 class Comment(Base):
@@ -39,10 +38,3 @@ class Comment(Base):
     comment_text = Column(Text)
 
 
-class Category(Base):
-    __tablename__ = "category"
-    category_id = Column(Integer, primary_key=True, index=True)
-    category_url = Column(String(100), unique=True)
-    category_name = Column(String(20))
-    category_summary = Column(Text)
-    # post = relationship("Post", back_populates="category")

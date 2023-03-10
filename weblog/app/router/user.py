@@ -5,7 +5,7 @@ from ..schema import *
 from ..modules import *
 
 router = APIRouter(
-    prefix="/v1/users",
+    prefix="/users",
     tags=["Users"]
 )
 
