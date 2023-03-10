@@ -13,13 +13,12 @@ class UserSchema(BaseModel):
 
 
 class PostSchema(BaseModel):
-    user_id: int = Field(unique=True)
     post_url: str
     post_title: str
     post_image: str
     post_content: str
-    post_date: datetime
-    post_modified: datetime
+    # post_date: datetime
+    # post_modified: datetime
 
     class Config:
         orm_mode = True

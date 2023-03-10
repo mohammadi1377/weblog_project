@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from ..DataBase.my_database import get_db
 from sqlalchemy.orm import Session
-from ..schema import *
-from ..modules import *
+from ..schema import PostSchema
+from ..modules import Post
+from typing import List
 
 router = APIRouter(
     prefix="/v1/posts",
@@ -16,22 +17,17 @@ async def get_post(post_id: int, db: Session = Depends(get_db)):
     return db_post
 
 
-@router.get("/posts", response_model=PostSchema, status_code=200)
+@router.get("/posts", response_model=List[PostSchema], status_code=200)
 async def get_posts(db: Session = Depends(get_db)):
-    db_posts = db.query(Post).all
+    db_posts = db.query(Post).all()
     return db_posts
 
 
 @router.post("/post/", response_model=PostSchema, status_code=200)
 async def create_post(post: PostSchema, db: Session = Depends(get_db)):
-    new_post = Post(user_id=post.user_id,
-                    post_title=post.post_title,
-                    post_url=post.post_url,
-                    post_content=post.post_content,
-                    post_image=post.post_image
-                    )
+    new_post = Post(**post.dict())
 
-    db.add(create_post)
+    db.add(new_post)
     db.commit()
     return new_post
 

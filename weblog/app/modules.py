@@ -3,6 +3,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Column
 from sqlalchemy.types import String, Integer, Text, TIMESTAMP
 from .DataBase.my_database import Base
+from typing import List
 
 
 class User(Base):
@@ -17,22 +18,22 @@ class User(Base):
 class Post(Base):
     __tablename__ = "post"
     post_id = Column(Integer, primary_key=True, index=True)
-    # user_id = Column(Integer, ForeignKey("user.user_id"))
+    # user_id = Column(Integer, ForeignKey("users.user_id"))
     post_url = Column(String(100), unique=True)
     post_title = Column(String(20))
     post_image = Column(String(20))
     post_content = Column(Text)
-    post_date = Column(TIMESTAMP)
-    post_modified = Column(TIMESTAMP)
+    # post_date = Column(TIMESTAMP)
+    # post_modified = Column(TIMESTAMP)
     # category = relationship("Category", back_populates="post")
 
 
 class Comment(Base):
     __tablename__ = "comment"
     comment_id = Column(Integer, primary_key=True, index=True)
-    post_id = Column(Integer, ForeignKey("post.user_id"))
+    post_id = Column(Integer, ForeignKey("post.post_id"))
     user_name = Column(String(20))
-    user_id = Column(Integer, ForeignKey("user.user_id"))
+    user_id = Column(Integer, ForeignKey("users.user_id"))
     user_email = Column(String(50))
     comment_date = Column(String(20))
     comment_text = Column(Text)
