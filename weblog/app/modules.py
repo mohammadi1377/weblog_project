@@ -3,7 +3,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Column
 from sqlalchemy.types import String, Integer, Text, TIMESTAMP
 from .DataBase.my_database import Base
-from typing import List
+
 
 
 class User(Base):
@@ -23,8 +23,8 @@ class Post(Base):
     post_title = Column(String(20))
     post_image = Column(String(20))
     post_content = Column(Text)
-    # post_date = Column(TIMESTAMP)
-    # post_modified = Column(TIMESTAMP)
+    post_date = Column(TIMESTAMP)
+    post_modified = Column(TIMESTAMP)
     # category = relationship("Category", back_populates="post")
 
 
