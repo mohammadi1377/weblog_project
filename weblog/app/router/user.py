@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from ..DataBase.my_database import get_db
 from sqlalchemy.orm import Session
-from ..schema import *
+from ..schema import CreateUserSchema, UserSchemaOut
 from ..modules import *
+from app.utils import hash_password
 
 router = APIRouter(
     prefix="/users",
@@ -10,41 +11,40 @@ router = APIRouter(
 )
 
 
-@router.get("/", response_model=UserSchema)
+@router.get("/", response_model=UserSchemaOut)
 def get_users(db: Session = Depends(get_db)):
     users = db.query(User).all()
     return users
 
 
-@router.get("/{user_id}", response_model=UserSchema)
+@router.get("/{user_id}", response_model=UserSchemaOut)
 def get_user(user_id: int, db: Session = Depends(get_db)):
     user = db.query(User).filter(User.id == user_id).first()
     check_if_exists(user, user_id)
     return user
 
 
-@router.post("/", status_code=status.HTTP_201_CREATED, response_model=UserSchema)
-def create_user(user: UserSchema, db: Session = Depends(get_db)):
+@router.post("/", status_code=status.HTTP_201_CREATED, response_model=UserSchemaOut)
+def create_user(user: CreateUserSchema, db: Session = Depends(get_db)):
     new_user = User(user_name=user.user_name,
-                    user_role=user.user_role,
                     user_email=user.user_email,
-                    password=user.password)
+                    password=hash_password(user.password))
     db.add(new_user)
     db.commit()
 
     return new_user
 
 
-@router.patch("/user/{id}", response_model=UserSchema, status_code=200)
-async def update(user_id: int, user: UserSchema, db: Session = Depends(get_db)):
+@router.patch("/user/{id}", response_model=UserSchemaOut, status_code=200)
+async def update(user_id: int, user: CreateUserSchema, db: Session = Depends(get_db)):
     update_user = db.query(User).get(user_id)
 
     update_user.user_name = user.user_name
     update_user.user_email = user.user_email
-    update_user.password = user.password
+    update_user.password = hash_password(user.password)
 
-    db.refresh(update_user)
     db.commit()
+    db.refresh(update_user)
     return update_user
 
 

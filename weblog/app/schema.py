@@ -11,19 +11,18 @@ class UserSchema(BaseModel):
         orm_mode = True
 
 
-class UserSchemaIn(UserSchema):
-    user_role: str
+class CreateUserSchema(UserSchema):
     user_name: str = Field(unique=True)
-    user_email: EmailStr
-    password: str = Field(unique=True, min_length=8)
 
     class Config:
         orm_mode = True
 
 
-class UserSchemaOut(UserSchema):
+class UserSchemaOut(BaseModel):
     user_id: int
+    user_role: str = "User"
     user_name: str = Field(unique=True)
+    user_email: EmailStr
 
     class Config:
         orm_mode = True
