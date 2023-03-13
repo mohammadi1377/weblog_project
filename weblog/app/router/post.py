@@ -3,7 +3,7 @@ from .. import oauth2
 from ..DataBase.my_database import get_db
 from sqlalchemy.orm import Session
 from ..schema import PostSchema, PostSchemaOut
-from ..modules import Post,User
+from ..modules import Post, User
 from typing import List
 
 router = APIRouter(
