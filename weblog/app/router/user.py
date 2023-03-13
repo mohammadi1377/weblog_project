@@ -3,7 +3,7 @@ from ..DataBase.my_database import get_db
 from sqlalchemy.orm import Session
 from ..schema import CreateUserSchema, UserSchemaOut
 from ..modules import *
-from app.utils import hash_password
+from ..utils import hash_password
 
 router = APIRouter(
     prefix="/users",
