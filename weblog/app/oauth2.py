@@ -3,8 +3,8 @@ from fastapi.security import OAuth2PasswordBearer
 from jose import jwt, JWTError
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
-from app import schema, modules
-from DataBase import my_database
+from app import schema, models
+from .DataBase import my_database
 
 
 SECRET_KEY = "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"
@@ -42,5 +42,5 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
                                           detail="Could not validate credentials",
                                           headers={"WWW-Authenticate": "Bearer"})
     token = verify_access_token(token, credentials_exception)
-    user = db.query(modules.User).filter(modules.User.id == token.id).first()
+    user = db.query(models.User).filter(models.User.id == token.id).first()
     return user

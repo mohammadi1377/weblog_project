@@ -1,10 +1,9 @@
 from pydantic import BaseModel, EmailStr, Field
-from datetime import datetime
 from typing import Optional
 
 
 class UserSchema(BaseModel):
-    user_email: EmailStr
+    email: EmailStr
     password: str = Field(unique=True, min_length=8)
 
     class Config:
@@ -12,41 +11,57 @@ class UserSchema(BaseModel):
 
 
 class CreateUserSchema(UserSchema):
-    user_name: str = Field(unique=True)
+    name: str = Field(unique=True)
 
     class Config:
         orm_mode = True
 
 
 class UserSchemaOut(BaseModel):
-    user_id: int
-    user_role: str = "User"
-    user_name: str = Field(unique=True)
-    user_email: EmailStr
-
-    class Config:
-        orm_mode = True
-
-
-class CommentSchema(BaseModel):
-    post_id: int = Field(unique=True)
-    user_name: str = Field(unique=True)
-    user_id: int = Field(unique=True)
-    user_email: EmailStr
-    comment_date: str
-    comment_text: str
+    id: int
+    role: str = "User"
+    name: str = Field(unique=True)
+    email: EmailStr
 
     class Config:
         orm_mode = True
 
 
 class PostSchema(BaseModel):
-    post_title: str
-    post_image: str
-    post_content: str
+    title: str
+    image: bytes
+    content: str
+    owner: UserSchemaOut
 
     class Config:
         orm_mode = True
+
+
+class CommentSchema(BaseModel):
+    # post: PostSchemaOut
+    # owner: UserSchemaOut
+    text: str
+
+
+class CommentSchemaIn(BaseModel):
+    post_id: int = Field(unique=True)
+    comment_text: str
+
+    class Config:
+        orm_mode = True
+
+
+class CommentSchemaOut(CommentSchema):
+    text: str
+    owner: UserSchemaOut
+
+    class Config:
+        orm_mode = True
+
+
+class CommentSchemaRef(CommentSchemaOut):
+    post: PostSchema
+    owner: UserSchemaOut
 
 
 class PostSchemaOut(PostSchema):
@@ -64,4 +79,3 @@ class TokenData(BaseModel):
 class Token(BaseModel):
     access_token: str
     token_type: str = "bearer"
-

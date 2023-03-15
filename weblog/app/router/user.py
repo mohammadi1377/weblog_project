@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from ..DataBase.my_database import get_db
 from sqlalchemy.orm import Session
 from ..schema import CreateUserSchema, UserSchemaOut
-from ..modules import *
+from ..models import *
 from ..utils import hash_password
 
 router = APIRouter(
