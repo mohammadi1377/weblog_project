@@ -29,7 +29,7 @@ class UserSchemaOut(BaseModel):
 
 class PostSchema(BaseModel):
     title: str
-    image: bytes
+    # image: bytes
     content: str
     owner: UserSchemaOut
 
@@ -65,7 +65,7 @@ class CommentSchemaRef(CommentSchemaOut):
 
 
 class PostSchemaOut(PostSchema):
-    post_comments: list[CommentSchema] | None
+    post_comments: list[CommentSchema] = []
 
     class Config:
         orm_mode = True

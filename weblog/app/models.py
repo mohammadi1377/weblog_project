@@ -1,7 +1,7 @@
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Column
-from sqlalchemy.types import String, Integer, Text, TIMESTAMP, BLOB
+from sqlalchemy.types import String, Integer, Text, TIMESTAMP
 from .DataBase.my_database import Base
 
 
@@ -19,13 +19,14 @@ class Post(Base):
     __tablename__ = "posts"
     id = Column(Integer, primary_key=True, index=True)
     owner_id = Column(ForeignKey("users.id"))
-    owner = relationship(User, back_populates="posts")
+    owner = relationship("User", back_populates="posts")
     title = Column(String(20))
-    image = Column(BLOB)
+    # image = Column(BLOB)
     content = Column(Text)
-    created_at = Column(TIMESTAMP, nullable=True)
-    modified_at = Column(TIMESTAMP, nullable=True)
-    comments = relationship("Comment", back_populates="post")
+    # created_at = Column(TIMESTAMP, nullable=True)
+    # modified_at = Column(TIMESTAMP, nullable=True)
+    # comments_id = Column(ForeignKey("comments.id"))
+    comments = relationship("Comment", back_populates="posts")
 
 
 class Comment(Base):
@@ -33,7 +34,7 @@ class Comment(Base):
     id = Column(Integer, primary_key=True, index=True)
     post_id = Column(ForeignKey("posts.id"))
     owner_id = Column(ForeignKey("users.id"))
-    date = Column(TIMESTAMP)
+    # date = Column(TIMESTAMP)
     text = Column(Text)
-    user = relationship("User", back_populates="comments")
-    post = relationship("Post", back_populates="comments")
+    owner = relationship("User")
+    post = relationship("Post")

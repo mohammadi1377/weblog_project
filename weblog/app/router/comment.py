@@ -13,8 +13,7 @@ router = APIRouter(
 
 @router.post("/", response_model=CommentSchemaOut)
 async def create_comment(comment: CommentSchemaIn, db: Session = Depends(get_db), current_user: User = Depends(oauth2.get_current_user)):
-    # comment_user_name = db.query(User).filter(Comment.user_id == User.user_id).scaler()
-    new_comment = Comment(**comment.dict(), user=current_user)
+    new_comment = Comment(**comment.dict(), owner=current_user)
     db.add(new_comment)
     db.commit()
     db.refresh(new_comment)
@@ -22,7 +21,7 @@ async def create_comment(comment: CommentSchemaIn, db: Session = Depends(get_db)
 
 
 @router.get("/{comment_id}/", response_model=list[CommentSchemaOut])
-async def read_comments(post_id: int, db: Session = Depends(get_db)):
+async def get_comments(post_id: int, db: Session = Depends(get_db)):
     db_comment = db.query(Comment).filter(Comment.post_id == post_id).all()
     if db_comment is None:
         raise HTTPException(status_code=404, detail="Comment not found")
