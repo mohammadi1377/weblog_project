@@ -19,8 +19,8 @@ class CreateUserSchema(UserSchema):
 
 class UserSchemaOut(BaseModel):
     id: int
-    role: str = "User"
-    name: str = Field(unique=True)
+    role: str
+    name: str #= Field(unique=True)
     email: EmailStr
 
     class Config:

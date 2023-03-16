@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from ..schema import CreateUserSchema, UserSchemaOut
 from ..models import *
 from ..utils import hash_password
+from typing import List
 
 router = APIRouter(
     prefix="/users",
@@ -11,23 +12,23 @@ router = APIRouter(
 )
 
 
-@router.get("/", response_model=UserSchemaOut)
+@router.get("/", response_model=List[UserSchemaOut])
 def get_users(db: Session = Depends(get_db)):
     users = db.query(User).all()
     return users
 
 
-@router.get("/{user_id}", response_model=UserSchemaOut)
-def get_user(user_id: int, db: Session = Depends(get_db)):
-    user = db.query(User).filter(User.id == user_id).first()
-    check_if_exists(user, user_id)
+@router.get("/{id}", response_model=UserSchemaOut)
+def get_user(id: int, db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.id == id).first()
+    check_if_exists(user, id)
     return user
 
 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=UserSchemaOut)
 def create_user(user: CreateUserSchema, db: Session = Depends(get_db)):
-    new_user = User(user_name=user.user_name,
-                    user_email=user.user_email,
+    new_user = User(name=user.name,
+                    email=user.email,
                     password=hash_password(user.password))
     db.add(new_user)
     db.commit()
@@ -39,8 +40,8 @@ def create_user(user: CreateUserSchema, db: Session = Depends(get_db)):
 async def update(user_id: int, user: CreateUserSchema, db: Session = Depends(get_db)):
     update_user = db.query(User).get(user_id)
 
-    update_user.user_name = user.user_name
-    update_user.user_email = user.user_email
+    update_user.name = user.name
+    update_user.email = user.email
     update_user.password = hash_password(user.password)
 
     db.commit()

@@ -39,44 +39,11 @@
         </ul>
     </div>
 </nav>
-<div class="container-fluid bg-3 text-center">
-    <div class="row">
-        <div class="col-sm-3 ">
-            <p>post title</p>
-        </div>
-        <div class="col-sm-3">
-            <p>Some text..</p>
-        </div>
-        <div class="col-sm-3">
-            <p>Some text..</p>
-        </div>
-        <div class="col-sm-3">
-            <p>Some text..</p>
-        </div>
-    </div>
-</div><br>
-<div class="container-fluid bg-3 text-center">
-    <div class="row">
-        <div class="col-sm-3">
-            <p>Some text..</p>
-        </div>
-        <div class="col-sm-3">
-            <p>Some text..</p>
-        </div>
-        <div class="col-sm-3">
-            <p>Some text..</p>
-        </div>
-        <div class="col-sm-3">
-            <p>Some text..</p>
-        </div>
-    </div>
-</div><br><br>
-    {% for post in posts %}
-        <a href="{{ url_for('get_post', id=post.id) }}" class="post">
-            <h2>{{ post.title }}</h2>
-            <p> <b>Written by</b><span>{{ post.owner.name }}</span></p>
-<!--            <p><b>Description</b>: <span>{{ post.content }}</span></p>-->
-        </a>
-    {% end-for %}
+{% for post in posts %}
+    <a href="{{ url_for('get_post', id=post.id) }}" class="post">
+        <h2>{{ post.title }}</h2>
+        <p> <b>Written by</b><span>{{ post.owner.name }}</span></p>
+    </a>
+{% end-for %}
 </body>
 </html>
