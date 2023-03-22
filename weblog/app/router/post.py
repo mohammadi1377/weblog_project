@@ -36,7 +36,7 @@ async def get_posts(request: Request, db: Session = Depends(get_db)):
 @router.post("/", response_model=PostSchemaOut, status_code=200)
 async def create_post(post: PostSchema, db: Session = Depends(get_db),
                       current_user: User = Depends(oauth2.get_current_user)):
-    new_post = Post(**post.dict(), owner=current_user)
+    new_post = Post(**post.dict(), owner_id=current_user.id)
     db.add(new_post)
     db.commit()
     return new_post
