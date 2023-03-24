@@ -17,7 +17,14 @@
             background-color: #007bff !important;
             border-top-right-radius: 15px;
             border-bottom-right-radius: 15px;
+
             /*padding-right: 10px;*/
+        }
+
+        .nav_total{
+            background-color: #007bff !important;
+            border-top-right-radius: 15px;
+            border-bottom-right-radius: 15px;
         }
 
         .my_content {
@@ -75,6 +82,22 @@
         /*    height: 20px;*/
         /*    background: linear-gradient(to bottom, rgba(76, 76, 76, 0), #4c4c4c);*/
         /*}*/
+        .container-fluid {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .sidebar {
+            flex: 0 0 25%;
+            /* Set the width of the sidebar here */
+            background-color: #f1f1f1;
+        }
+
+        .content {
+            flex: 1;
+            /* This will make the content take up the remaining space */
+            background-color: #fff;
+        }
 
     </style>
 
@@ -82,13 +105,13 @@
 <body>
 <div class="container-fluid p-0">
     <div class="row">
-        <nav class="col-md-2 col-sm-12 d-none d-md-block sidebar my_content">
+        <nav class="col-md-2 col-sm-12 d-none d-md-block sidebar my_content nav_total">
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
                     <li class="nav-item">
                         <br>
                         <div class="row justify-content-center">
-                            <h2 class="text-light">Admin page</h2>
+                            <h3 class="text-light">Admin page</h3>
                         </div>
                         <br>
                     </li>
@@ -99,49 +122,69 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-light" href="#">
-                            Orders
+                            Posts
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-light" href="#">
-                            Customers
+                            comments
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-light" href="#">
-                            Reports
+                            unsubmitted comments
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <hr>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="#">
+                            Home page
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-light" href="#">
-                            Integrations
+                            About us page
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light" href="#">
-                            Settings
+                        <a class="nav-link text-info" href="#">
+                            Log out
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="#">
-                            Help
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <br><br><br>
-                        <div class="row justify-content-center">
-                            <div class="col-6">
-                                <button class="btn btn-info btn-block">Logout</button>
-                                <br>
-                            </div>
-                        </div>
-                    </li>
+<!--                    <li class="nav-item">-->
+<!--                        <br><br><br>-->
+<!--                        <div class="row justify-content-center">-->
+<!--                            <div class="col-6">-->
+<!--                                <button class="btn btn-info btn-block">Logout</button>-->
+<!--                                <br>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </li>-->
                 </ul>
             </div>
         </nav>
         <div class="col-md-10 col-sm-12 ">
-            <div class="content ">
-                <div class="row" style="margin-top: 10px">
+            <div class="content" style="margin-top: 30px">
+                <!--                <h1 class="text-info">Dashboard</h1>-->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h1>Dashboard</h1>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="d-flex align-items-center justify-content-end">
+                                <b class="mb-0" id="admin-name">Ali Alizadeh</b>
+                                <img src="./photos/profile-photo.png" class="rounded-circle mr-2" width="60"
+                                     height="60">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row" style="margin-top: 40px">
                     <div class="col-sm-3 col-md-3">
                         <div class="card bg-Secondary w-100" style="margin-right: 10px">
                             <div class="card-body">
@@ -153,6 +196,20 @@
                                 <!--                                <a href="#" class="btn btn-info float-right " style="min-width: 45px;">&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;all posts&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;</a>-->
                                 <div class="center">
                                     <a href="#" class="btn btn-info float-right " style="width: 100%">all posts</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-md-3">
+                        <div class="card bg-Secondary w-100">
+                            <div class="card-body">
+                                <h5 class="card-title text-info">Total posts:</h5>
+                                <!--                                <p class="card-text"> 200</p>-->
+                                <!--                                <h2>&emsp;200 <h6> &nbsp;posts</h6></h2>-->
+                                <h1 id="myPosts-num" class="text-center" style="margin-bottom: 0;">100</h1><h6
+                                    class="text-center">&emsp;my posts</h6><br style="margin-bottom: 0">
+                                <div class="center">
+                                    <a href="#" class="btn btn-info float-right " style="width: 100%">my posts</a>
                                 </div>
                             </div>
                         </div>
@@ -179,26 +236,32 @@
                                 <!--                                <p class="card-text"> 200</p>-->
                                 <!--                                <h2>&emsp;200 <h6> &nbsp;posts</h6></h2>-->
                                 <h1 id="contactUs-num" class="text-center" style="margin-bottom: 0;">54786</h1><h6
-                                    class="text-center">&emsp;usesr messages</h6><br style="margin-bottom: 0">
+                                    class="text-center">&emsp;user messages</h6><br style="margin-bottom: 0">
                                 <div class="center">
                                     <a href="#" class="btn btn-info float-right " style="width: 100%">messages</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3 col-md-3">
-                        <div class="card bg-Secondary w-100">
-                            <div class="card-body">
-                                <h5 class="card-title text-info">Total posts:</h5>
-                                <!--                                <p class="card-text"> 200</p>-->
-                                <!--                                <h2>&emsp;200 <h6> &nbsp;posts</h6></h2>-->
-                                <h1 id="contactdveUs-num" class="text-center" style="margin-bottom: 0;">54786</h1><h6
-                                    class="text-center">&emsp;usesr messages</h6><br style="margin-bottom: 0">
-                                <div class="center">
-                                    <a href="#" class="btn btn-info float-right " style="width: 100%">messages</a>
-                                </div>
-                            </div>
-                        </div>
+
+                </div>
+                <div class="card" style="margin-top: 25px">
+                    <div class="card-header">
+                        Notes for Admins
+                    </div>
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                            <p>Freedom is the will to be responsible to ourselves. It is to preserve the distance which
+                                separates us from other men. To grow more indifferent to hardship, to severity, to
+                                privation, and even to life itself. To be proud and sure of ourselves without
+                                selfishness. To be so free in spirit that we can truly love the one we love. To
+                                apprehend the beauty of the earth in silence. To feel the joy of solitude. To be able to
+                                withstand criticism without resentment and to refuse praise without arrogance. To be
+                                able to hear, to see, and to feel, and never to forget that these sensations are a gift
+                                from God and constitute the real meaning of life.</p>
+                            <footer class="blockquote-footer"><cite title="Source Title">Michael Oakeshott</cite>
+                            </footer>
+                        </blockquote>
                     </div>
                 </div>
             </div>
