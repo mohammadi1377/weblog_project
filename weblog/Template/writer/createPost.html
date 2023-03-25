@@ -7,6 +7,18 @@
     <link rel="stylesheet"
           href="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/docs-app/css/dist/mdb5/standard/core.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <style>
+        .form-container {
+            /*width: 400px;*/
+            /*height: 400px;*/
+            margin: 20px;
+            /*margin-top: 50px;*/
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -49,6 +61,24 @@
             <li class="breadcrumb-item active" aria-current="page">Create post</li>
         </ol>
     </nav>
+    <div class="form-container" >
+        <form>
+            <div class="form-group">
+                <label for="title">Post Title</label>
+                <input type="text" class="form-control" id="title" placeholder="Enter title">
+            </div>
+            <div class="form-group">
+                <label for="text">Post Content</label>
+                <textarea class="form-control" id="text" rows="8" placeholder="Enter text"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="image">Upload Image</label>
+                <input type="file" class="form-control-file" id="image">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
 </div>
 </body>
 </html>
