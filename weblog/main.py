@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.router import post, root, comment, user
+from app.router import post, root, comment, user, contact
 from app.DataBase.my_database import Base, engine
 
 
@@ -22,7 +22,7 @@ app = FastAPI(
     title=title,
     description=description,
     version="0.0.1",
-    terms_of_service="http://example.com/terms/",
+    terms_of_service="https://maktabsharif.ir/",
     contact={
         "name": "TEST",
         "url": "https://maktabsharif.ir/",
@@ -39,3 +39,4 @@ app.include_router(post.router)
 app.include_router(root.router)
 app.include_router(comment.router)
 app.include_router(user.router)
+app.include_router(contact.router)
