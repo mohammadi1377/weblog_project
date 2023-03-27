@@ -34,20 +34,30 @@ async def get_posts(request: Request, db: Session = Depends(get_db)):
 
 
 @router.post("/", response_model=PostSchemaOut, status_code=200)
-async def create_post(post: PostSchema, db: Session = Depends(get_db),
-                      current_user: User = Depends(oauth2.get_current_user)):
+def create_post(post: PostSchema, db: Session = Depends(get_db),
+                current_user: User = Depends(oauth2.get_current_user)):
+    if current_user.role not in ['admin', 'superuser']:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized to perform requested action")
+
     new_post = Post(**post.dict(), owner=current_user)
     db.add(new_post)
     db.commit()
+    db.refresh(new_post)
     return new_post
 
 
-@router.patch("/{id}", response_model=PostSchema, status_code=200)
-async def update(post_id: int, post: PostSchema, db: Session = Depends(get_db),
-                 current_user: User = Depends(oauth2.get_current_user)):
+@router.patch("/{post_id}", response_model=PostSchema, status_code=200)
+def update(post_id: int, post: PostSchema, db: Session = Depends(get_db),
+           current_user: User = Depends(oauth2.get_current_user)):
+    if current_user.role not in ['admin', 'superuser']:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized to perform requested action")
+
     update_post = db.query(Post).get(post_id)
 
-    check_if_exists(update_post, post_id)
+    if not update_post:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"Post with id:{post_id} was not found")
+
     if update_post.user_id != current_user.id:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized to perform requested action")
 
@@ -60,14 +70,21 @@ async def update(post_id: int, post: PostSchema, db: Session = Depends(get_db),
     return update_post
 
 
-@router.delete('/{id}', status_code=200)
-async def delete_post(post_id: int, db: Session = Depends(get_db),
-                      current_user: User = Depends(oauth2.get_current_user)):
-    db_delete = db.query(Post).get(post_id)
-    if db_delete.id != current_user.id:
+@router.delete('/{post_id}', status_code=200)
+def delete_post(post_id: int, db: Session = Depends(get_db),
+                current_user: User = Depends(oauth2.get_current_user)):
+    if current_user.role not in ['admin', 'superuser']:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized to perform requested action")
+
+    db_delete = db.query(Post).get(post_id)
+
     if not db_delete:
-        raise HTTPException(status_code=204, detail=f"Post {post_id} does not exist")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"Post with id:{post_id} was not found")
+
+    if db_delete.user_id != current_user.id:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized to perform requested action")
+
     db.delete(db_delete)
     db.commit()
     return None
