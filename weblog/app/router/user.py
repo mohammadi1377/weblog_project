@@ -1,4 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.security import HTTPBearer
+from .. import oauth2
 from ..DataBase.my_database import get_db
 from sqlalchemy.orm import Session
 from ..schema import CreateUserSchema, UserSchemaOut
@@ -11,19 +13,28 @@ router = APIRouter(
     tags=["Users"]
 )
 
+security = HTTPBearer()
+
 
 @router.get("/", response_model=List[UserSchemaOut])
-def get_users(db: Session = Depends(get_db)):
+async def get_users(db: Session = Depends(get_db),
+                    current_user: User = Depends(oauth2.get_current_user)):
+    if current_user.role == 'admin':
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized to perform requested action")
     users = db.query(User).all()
     return users
 
 
 @router.get("/{id}", response_model=UserSchemaOut)
-def get_user(id: int, db: Session = Depends(get_db)):
+async def get_user(id: int, db: Session = Depends(get_db),
+                   current_user: User = Depends(oauth2.get_current_user)):
+    if current_user.role == 'admin':
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized to perform requested action")
     user = db.query(User).filter(User.id == id).first()
-    check_if_exists(user, id)
+    if not user:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"User with id {id} not found.")
     return user
-
 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=UserSchemaOut)
 def create_user(user: CreateUserSchema, db: Session = Depends(get_db)):
@@ -50,8 +61,12 @@ async def update(user_id: int, user: CreateUserSchema, db: Session = Depends(get
 
 
 @router.delete('/user/{id}', status_code=200)
-async def delete_user(user_id: int, db: Session = Depends(get_db)):
+async def delete_user(user_id: int, db: Session = Depends(get_db), current_user: User = Depends(oauth2.get_current_user)):
+    if current_user.role not in ['admin', 'superuser']:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized to perform requested action")
     db_delete = db.query(User).get(user_id)
+    if db_delete.user_id != current_user.id:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized to perform requested action")
     if not db_delete:
         raise HTTPException(status_code=404, detail=f"Post {user_id} does not exist")
     db.delete(db_delete)
