@@ -31,7 +31,7 @@ class PostSchema(BaseModel):
     title: str
     # image: bytes
     content: str
-    owner: UserSchemaOut
+    #owner: UserSchemaOut
 
     class Config:
         orm_mode = True
