@@ -12,20 +12,20 @@ class User(Base):
     name = Column(String(20), unique=True)
     email = Column(String(50), unique=True)
     password = Column(Text)
+    posts = relationship("Post", backref="users")
+    comments = relationship("Comment", backref="users")
 
 
 class Post(Base):
     __tablename__ = "posts"
     id = Column(Integer, primary_key=True, index=True)
     owner_id = Column(ForeignKey("users.id"))
-    # owner = relationship("User", back_populates="posts")
+    comments = relationship("Comment", backref="posts")
     title = Column(String(20))
-    # image = Column(BLOB)
     content = Column(Text)
+    # image = Column(BLOB)
     # created_at = Column(TIMESTAMP, nullable=True)
     # modified_at = Column(TIMESTAMP, nullable=True)
-    # comments_id = Column(ForeignKey("comments.id"))
-    # comments = relationship("Comment", back_populates="posts")
 
 
 class Comment(Base):
@@ -33,7 +33,5 @@ class Comment(Base):
     id = Column(Integer, primary_key=True, index=True)
     post_id = Column(ForeignKey("posts.id"))
     owner_id = Column(ForeignKey("users.id"))
-    # date = Column(TIMESTAMP)
     text = Column(Text)
-    # owner = relationship("User", back_populates="comments")
-    # posts = relationship("Post", back_populates="comments")
+    # date = Column(TIMESTAMP)
