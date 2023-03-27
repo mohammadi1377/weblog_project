@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, EmailStr, Field, BaseSettings
 from typing import Optional
 
 
@@ -79,3 +79,25 @@ class TokenData(BaseModel):
 class Token(BaseModel):
     access_token: str
     token_type: str = "bearer"
+
+
+class ContactForm(BaseModel):
+    name: str
+    email: EmailStr
+    message: str
+
+
+class ConnectionConfig(BaseSettings):
+    MAIL_USERNAME: str
+    MAIL_PASSWORD: str
+    MAIL_FROM: str
+    MAIL_PORT: int = 587
+    MAIL_SERVER: str = "smtp.gmail.com"
+    MAIL_TLS: bool = True
+    MAIL_SSL: bool = False
+    MAIL_DEBUG: bool = False
+    MAIL_STARTTLS: bool = True
+    MAIL_SSL_TLS: bool = False
+
+    class Config:
+        env_prefix = "MAIL_"
