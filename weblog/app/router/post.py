@@ -71,8 +71,7 @@ def update(post_id: int, post: PostSchema, db: Session = Depends(get_db),
 
 
 @router.delete('/{post_id}', status_code=200)
-def delete_post(post_id: int, db: Session = Depends(get_db),
-                current_user: User = Depends(oauth2.get_current_user)):
+def delete_post(post_id: int, db: Session = Depends(get_db),current_user: User = Depends(oauth2.get_current_user)):
     if current_user.role not in ['admin', 'superuser']:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized to perform requested action")
 
