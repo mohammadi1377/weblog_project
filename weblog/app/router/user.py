@@ -19,7 +19,7 @@ security = HTTPBearer()
 @router.get("/", response_model=List[UserSchemaOut])
 async def get_users(db: Session = Depends(get_db),
                     current_user: User = Depends(oauth2.get_current_user)):
-    if current_user.role == 'admin':
+    if current_user.role != 'admin':
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized to perform requested action")
     users = db.query(User).all()
     return users
@@ -28,7 +28,7 @@ async def get_users(db: Session = Depends(get_db),
 @router.get("/{id}", response_model=UserSchemaOut)
 async def get_user(id: int, db: Session = Depends(get_db),
                    current_user: User = Depends(oauth2.get_current_user)):
-    if current_user.role == 'admin':
+    if current_user.role != 'admin':
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized to perform requested action")
     user = db.query(User).filter(User.id == id).first()
     if not user:
