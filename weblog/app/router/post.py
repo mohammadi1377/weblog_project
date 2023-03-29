@@ -39,7 +39,7 @@ def create_post(post: PostSchema, db: Session = Depends(get_db),
     if current_user.role not in ['admin', 'superuser']:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized to perform requested action")
 
-    new_post = Post(**post.dict(), owner=current_user)
+    new_post = Post(**post.dict(), owner_id=current_user.id)
     db.add(new_post)
     db.commit()
     db.refresh(new_post)
@@ -58,20 +58,18 @@ def update(post_id: int, post: PostSchema, db: Session = Depends(get_db),
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"Post with id:{post_id} was not found")
 
-    if update_post.user_id != current_user.id:
+    if update_post.owner_id != current_user.id:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized to perform requested action")
 
     update_post.title = post.title
     update_post.content = post.content
-    # update_post.image = post.image
-
     db.commit()
     db.refresh(update_post)
     return update_post
 
 
 @router.delete('/{post_id}', status_code=200)
-def delete_post(post_id: int, db: Session = Depends(get_db),current_user: User = Depends(oauth2.get_current_user)):
+def delete_post(post_id: int, db: Session = Depends(get_db), current_user: User = Depends(oauth2.get_current_user)):
     if current_user.role not in ['admin', 'superuser']:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized to perform requested action")
 
@@ -81,7 +79,7 @@ def delete_post(post_id: int, db: Session = Depends(get_db),current_user: User =
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"Post with id:{post_id} was not found")
 
-    if db_delete.user_id != current_user.id:
+    if db_delete.owner_id != current_user.id:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized to perform requested action")
 
     db.delete(db_delete)
