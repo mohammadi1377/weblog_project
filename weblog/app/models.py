@@ -1,8 +1,9 @@
-from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKey, Date
 from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Column
-from sqlalchemy.types import String, Integer, Text, TIMESTAMP
+from sqlalchemy.types import String, Integer, Text, Boolean
 from .DataBase.my_database import Base
+from datetime import date
 
 
 class User(Base):
@@ -12,26 +13,27 @@ class User(Base):
     name = Column(String(20), unique=True)
     email = Column(String(50), unique=True)
     password = Column(Text)
-    posts = relationship("Post", backref="users")
-    comments = relationship("Comment", backref="users")
+    created_at = Column(Date, default=date.today())
 
 
 class Post(Base):
     __tablename__ = "posts"
     id = Column(Integer, primary_key=True, index=True)
     owner_id = Column(ForeignKey("users.id"))
-    comments = relationship("Comment", backref="posts")
+    owner = relationship("User", backref="posts")
     title = Column(String(20))
     content = Column(Text)
-    # image = Column(BLOB)
-    # created_at = Column(TIMESTAMP, nullable=True)
-    # modified_at = Column(TIMESTAMP, nullable=True)
+    created_at = Column(Date, default=date.today())
+    modified_at = Column(Date, default=date.today())
 
 
 class Comment(Base):
     __tablename__ = "comments"
     id = Column(Integer, primary_key=True, index=True)
     post_id = Column(ForeignKey("posts.id"))
+    post = relationship("Post", backref="comments")
     owner_id = Column(ForeignKey("users.id"))
-    text = Column(Text)
-    # date = Column(TIMESTAMP)
+    owner = relationship("User", backref="comments")
+    text = Column(String(200))
+    created_at = Column(Date, default=date.today())
+    accepted = Column(Boolean, nullable=False, server_default='False')
