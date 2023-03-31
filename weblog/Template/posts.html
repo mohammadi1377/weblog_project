@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/docs-app/css/dist/mdb5/standard/core.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <style>
+      .card {
+        border: 2px solid #0a2fe3;
+      }
+    </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -17,33 +22,39 @@
         <div class="collapse navbar-collapse" id="navbarColor02">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item active">
-                    <a class="nav-link" aria-current="page" href="home.html">Home</a>
+                    <a class="nav-link" aria-current="page" href="/home/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="posts.html">Posts</a>
+                    <a class="nav-link" href="/posts/">Posts</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Admin</a>
+                    <a class="nav-link" href="/admin/">Admin</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="about.html">About US</a>
+                    <a class="nav-link" href="/about/">About US</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="contact.html">Contact Us</a>
+                    <a class="nav-link" href="/contact_us/">Contact Us</a>
                 </li>
             </ul>
         </div>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="signup.html" class="bg-primary"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a href="login.html" class="bg-primary"><span class="glyphicon glyphicon-log-in" ></span> Login</a></li>
+            <li><a href="/signup/" class="bg-primary"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li><a href="/login/" class="bg-primary"><span class="glyphicon glyphicon-log-in" ></span> Login</a></li>
         </ul>
     </div>
 </nav>
 {% for post in posts %}
-    <a href="{{ url_for('get_post', id=post.id) }}" class="post">
-        <h2>{{ post.title }}</h2>
-        <p> <b>Written by</b><span>{{ post.owner.name }}</span></p>
-    </a>
-{% end-for %}
+  <div class="col-md-4 mb-4">
+    <div class="card">
+      <div class="card-body">
+         <h5 class="card-title"><a href="{{ url_for('get_post', id=post.id) }}" class="post"> Post Title : {{ post.title }}</a></h5>
+         <p class="card-text">In this post we learn about {{ post.title }} </p>
+         <p class="card-text"><small class="text-muted">By {{post.owner.name}} | {{post.created_at}}</small></p>
+
+      </div>
+     </div>
+   </div>
+  {% endfor %}
 </body>
 </html>
