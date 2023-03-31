@@ -2,10 +2,8 @@ from pydantic import BaseModel, EmailStr, Field, validator
 from typing import Optional
 
 
-
 class UserSchema(BaseModel):
-    # email: EmailStr
-    username: str
+    email: EmailStr
     password: str = Field(min_length=8)
 
     class Config:
@@ -15,7 +13,6 @@ class UserSchema(BaseModel):
 class CreateUserSchema(UserSchema):
     name: str
     confirm_pass: str = Field(min_length=8)
-
 
     @validator('confirm_pass')
     @classmethod
@@ -31,7 +28,7 @@ class CreateUserSchema(UserSchema):
 class UserSchemaOut(BaseModel):
     # id: int
     role: str
-    name: str #= Field(unique=True)
+    name: str
     email: EmailStr
 
 
