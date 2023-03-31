@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Add</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/docs-app/css/dist/mdb5/standard/core.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <style>
+      .card {
+         border: 2px solid #0a2fe3;
+         background-color: #d0f5fa;
+         padding-top: 10px;
+         margin-top: 50px;
+         height:200px;
+         text-align: center;
+      }
+
+      .card-title {
+        font-size: 40px;
+      }
+
+
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <h3>Group Five</h3>
+        <button class="navbar-toggle" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarColor02">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link" aria-current="page" href="/home/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/posts/">Posts</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/posts/">Add </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/">Admin</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about/">About US</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contact_us/">Contact Us</a>
+                </li>
+            </ul>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="/signup/" class="bg-primary"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li><a href="/login/" class="bg-primary"><span class="glyphicon glyphicon-log-in" ></span> Login</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="container mt-5">
+  <form id="current_user.id" method="POST" action="/posts/add/"  onsubmit="add(event, this)">
+    <div class="form-group">
+      <label for="post-title">Title</label>
+      <input type="text" class="form-control" id="post-title" name="title" required>
+    </div>
+    <div class="form-group">
+      <label for="post-content">Content</label>
+      <textarea class="form-control" id="post-content" name="content" rows="3" required></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+<script>
+async function add(event, el) {
+            event.preventDefault();
+            const formData = new FormData(el);
+            const urlEncodedData = new URLSearchParams(formData).toString();
+
+            const response = await fetch(el.action, {
+                method: el.method,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: urlEncodedData
+            });
+
+            if (response.status === 200) {
+                alert("post created!");
+                window.location.replace("/posts/");
+            } else {
+                alert("sorry your post do not created!");
+            }
+        }
+</script>
+</body>
+</html>
