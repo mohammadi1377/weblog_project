@@ -1,0 +1,47 @@
+from fastapi import APIRouter, Request, Depends
+from .auth import template
+from fastapi.responses import HTMLResponse
+from .. import oauth2
+from ..DataBase.my_database import get_db
+from sqlalchemy.orm import Session
+from sqlalchemy import desc
+from ..models import Post, User
+
+
+
+router = APIRouter(
+    tags=["Home"]
+)
+
+
+@router.get("/home/", response_class=HTMLResponse)
+def home(request: Request, db: Session = Depends(get_db)):
+    last_3_posts = db.query(Post).order_by(desc(Post.created_at)).limit(3)
+    return template.TemplateResponse(
+        "home.html",
+        {"request": request,
+         "posts": last_3_posts,}
+    )
+
+
+@router.get("/about/")
+def about(request: Request):
+    return template.TemplateResponse(
+        "about.html",
+        {"request": request}
+    )
+
+
+@router.get("/contact_us/")
+def about(request: Request):
+    return template.TemplateResponse(
+        "contact.html",
+        {"request": request}
+    )
+
+@router.get("/signup/")
+def sign_up(request: Request):
+    return template.TemplateResponse(
+        "signup.html",
+        {"request": request}
+    )
