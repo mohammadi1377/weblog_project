@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from fastapi.responses import HTMLResponse
 from ..models import Comment, User, Post
 from .post import template
-from ..schema import UserSchemaOut
+from ..schema import UserSchemaOut, CreateUserSchema
 from typing import List
 
 router = APIRouter(
@@ -15,9 +15,9 @@ router = APIRouter(
 
 
 @router.get("/", response_class=HTMLResponse)
-def admin(request: Request, current_user: User = Depends(oauth2.get_current_user)):
-    if current_user.role != 'admin':
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized to perform requested action")
+def admin(request: Request):
+    # if current_user.role != 'admin':
+    #     raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized to perform requested action")
     return template.TemplateResponse(
         "admin.html",
         {"request": request},
@@ -74,3 +74,18 @@ def comments(request: Request, db: Session = Depends(get_db)):
          "comments": db_comments
          }
     )
+
+
+@router.patch("/{id}", response_model=UserSchemaOut, status_code=200)
+async def update(user_id: int, user: CreateUserSchema, db: Session = Depends(get_db), current_user: User = Depends(oauth2.get_current_user)):
+    update_user = db.query(User).get(user_id)
+    if current_user.role == "admin":
+        if update_user.role == "user":
+            update_user.role = "superuser"
+
+        elif update_user.role == "superuser":
+            update_user.role = "user"
+
+    db.commit()
+    db.refresh(update_user)
+    return update_user
