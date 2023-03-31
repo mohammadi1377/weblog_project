@@ -30,7 +30,6 @@ def logout(response: Response):
 
 @router.post("/login/")   #Don't Forget response
 def login(user_instance: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db), ):
-    print(1)
     user = db.query(User).filter(User.email == user_instance.username).first()
     if user is None:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Invalid Credentials")
@@ -39,4 +38,5 @@ def login(user_instance: OAuth2PasswordRequestForm = Depends(), db: Session = De
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Invalid Credentials")
 
     access_token = create_access_token(data={"user_id": user.id, "sub": user.email})
+
     return {"access_token": access_token, "token_type": "bearer"}
