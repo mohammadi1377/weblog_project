@@ -32,6 +32,13 @@ async def get_posts(request: Request, db: Session = Depends(get_db)):
         "posts": posts
     })
 
+@router.get("/add/")
+def add(request: Request):
+    return template.TemplateResponse(
+        "add.html",
+        {"request": request}
+    )
+
 
 @router.post("/", response_model=PostSchemaOut, status_code=200)
 def create_post(post: PostSchema, db: Session = Depends(get_db),
@@ -45,7 +52,12 @@ def create_post(post: PostSchema, db: Session = Depends(get_db),
     db.refresh(new_post)
     return new_post
 
-
+@router.get("/login/")
+def login(request: Request):
+    return template.TemplateResponse(
+        "login.html",
+        {"request": request}
+    )
 @router.patch("/{post_id}", response_model=PostSchema, status_code=200)
 def update(post_id: int, post: PostSchema, db: Session = Depends(get_db),
            current_user: User = Depends(oauth2.get_current_user)):
