@@ -3,81 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <title>LogIn</title>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-	<style>
-		form { margin: 0px 10px; }
-		h2 {
-		  margin-top: 2px;
-		  margin-bottom: 2px;
-		  text-align: center;
-		}
-		.container { max-width: 360px;
-		margin-top: 50px;
-		}
-		.divider hr {
-		  margin: 7px 0px;
-		  width: 35%;
-		}
-	</style>
+    <link href="HTTP://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="HTTP://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="HTTP://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+    <style>
+
+        form { margin: 0px 10px; }
+
+        h2 {
+          margin-top: 2px;
+          margin-bottom: 2px;
+          text-align: center;
+        }
+
+        .container { max-width: 360px;
+        margin-top: 50px;
+        }
+
+        .divider {
+          text-align: center;
+          margin-top: 20px;
+          margin-bottom: 5px;
+        }
+
+        .divider hr {
+          margin: 7px 0px;
+          width: 35%;
+        }
+
+        .left { float: left; }
+
+        .right { float: right; }
+
+    </style>
+
 </head>
+
 <body>
     <div class="container">
-		<div class="row">
-			<div class="panel panel-primary">
-				<div class="panel-body">
-					<form method="POST" action="/login" onsubmit="login(event, this)">
-						<div class="form-group">
-							<h2>Log In</h2>
-						</div>
-						<div class="form-group">
-							<label class="control-label" for="loginEmail">Email Address</label>
-							<input id="loginEmail" type="email" maxlength="50" class="form-control">
-						</div>
-						<div class="form-group">
-							<label class="control-label" for="loginPassword">Password</label>
-							<input id="loginPassword" type="password" maxlength="25" class="form-control" placeholder="at least 8 characters" length="40">
-							<input type="checkbox" onclick="showPass()">Show Password
-						</div>
-						<div class="form-group">
-							<button id="loginSubmit" type="submit" class="btn btn-info btn-block">Log In</button>
-						</div>
-						<hr>
-						<p></p>Don't have an account? <a href="/signup/">Sign Up</a>
-						<p>Return <a href="/home/">Home</a> </p>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-<script>
-	async function login(event, el){
-		event.preventDefault()
-		let response = await fetch(
-			el.action, {method: el.method, headers: {"Content-Type": "application/json"},
-		body: JSON.stringify({
-			email: el.querySelector("#loginEmail").value,
-			password: el.querySelector("#loginPassword").value
-		})}
-		)
-		if (response.status === 200){
-			alert("Welcome to our blog")
-			window.location.replace("/home/")
-		}
-		else {
-			alert("Invalid username or password")
-		}
-	}
-	function showPass() {
-		let x = document.getElementById("loginPassword");
-		if (x.type === "password") {
-    		x.type = "text";
-  		}
-		else {
-    		x.type = "password";
-  		}
-	}
-</script>
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-body">
+                    <form method="POST" action="/login/"  onsubmit="login(event, this)">
+                        <div class="form-group">
+                            <h2>Log In</h2>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label" for="loginEmail">Email Address</label>
+                            <input id="loginEmail" name="username" type="email" maxlength="50" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label" for="loginPassword">Password</label>
+                            <input id="loginPassword" name="password" type="password" maxlength="25" class="form-control" placeholder="at least 8 characters" >
+                        </div>
+
+                        <div class="form-group">
+                            <button id="loginSubmit" type="submit" class="btn btn-info btn-block">Log In</button>
+                        </div>
+                        <hr>
+                        <p>Don't have an account? <a href="/signup/">Sign Up</a></p>
+                        <p>Return <a href="/home/">Home</a> </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function login(event, el) {
+            event.preventDefault();
+            const formData = new FormData(el);
+            const urlEncodedData = new URLSearchParams(formData).toString();
+
+            const response = await fetch(el.action, {
+                method: el.method,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: urlEncodedData
+            });
+
+            if (response.status === 200) {
+                alert("Welcome to group five weblog");
+                window.location.replace("/home/");
+            } else {
+                alert("Invalid username or password");
+            }
+        }
+    </script>
+
 </body>
 </html>
