@@ -54,8 +54,6 @@ async def delete_user(user_id: int, db: Session = Depends(get_db), current_user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"Post with id:{user_id} was not found")
 
-    # if db_delete.id != current_user.id:
-    #     raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized to perform requested action")
 
     db.delete(db_delete)
     db.commit()

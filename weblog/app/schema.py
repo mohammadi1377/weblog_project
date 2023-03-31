@@ -4,7 +4,8 @@ from typing import Optional
 
 
 class UserSchema(BaseModel):
-    email: EmailStr
+    # email: EmailStr
+    username: str
     password: str = Field(min_length=8)
 
     class Config:
