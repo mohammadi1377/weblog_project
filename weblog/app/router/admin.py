@@ -63,7 +63,7 @@ def comments(request: Request, db: Session = Depends(get_db)):
     )
 
 
-@router.get("/notaccepted/")
+@router.get("/unconfirmed_comments/")
 def comments(request: Request, db: Session = Depends(get_db)):
     db_comments = db.query(Comment).filter(Comment.accepted == "False").all()
     num = len(db_comments)

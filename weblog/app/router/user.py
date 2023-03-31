@@ -16,7 +16,7 @@ router = APIRouter(
 security = HTTPBearer()
 
 
-@router.post("/regiregister/", status_code=status.HTTP_201_CREATED, response_model=UserSchemaOut)
+@router.post("/register/", status_code=status.HTTP_201_CREATED, response_model=UserSchemaOut)
 def create_user(user: CreateUserSchema, db: Session = Depends(get_db)):
     new_user = User(name=user.name,
                     email=user.email,
@@ -41,7 +41,6 @@ async def update(user_id: int, user: CreateUserSchema, db: Session = Depends(get
     return update_user
 
 
-
 @router.delete('/{id}', status_code=200)
 async def delete_user(user_id: int, db: Session = Depends(get_db), current_user: User = Depends(oauth2.get_current_user)):
 
@@ -53,7 +52,6 @@ async def delete_user(user_id: int, db: Session = Depends(get_db), current_user:
     if not db_delete:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"Post with id:{user_id} was not found")
-
 
     db.delete(db_delete)
     db.commit()

@@ -22,7 +22,7 @@ app = FastAPI(
     title=title,
     description=description,
     version="0.0.1",
-    terms_of_service="http://example.com/terms/",
+    terms_of_service="https://example.com/terms/",
     contact={
         "name": "TEST",
         "url": "https://maktabsharif.ir/",
