@@ -6,40 +6,22 @@
     <link href="HTTP://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="HTTP://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <script src="HTTP://code.jquery.com/jquery-1.11.1.min.js"></script>
-
     <style>
-
         form { margin: 0px 10px; }
-
         h2 {
           margin-top: 2px;
           margin-bottom: 2px;
           text-align: center;
         }
-
         .container { max-width: 360px;
         margin-top: 50px;
         }
-
-        .divider {
-          text-align: center;
-          margin-top: 20px;
-          margin-bottom: 5px;
-        }
-
         .divider hr {
           margin: 7px 0px;
           width: 35%;
         }
-
-        .left { float: left; }
-
-        .right { float: right; }
-
     </style>
-
 </head>
-
 <body>
     <div class="container">
         <div class="row">
@@ -49,17 +31,15 @@
                         <div class="form-group">
                             <h2>Log In</h2>
                         </div>
-
                         <div class="form-group">
                             <label class="control-label" for="loginEmail">Email Address</label>
                             <input id="loginEmail" name="username" type="email" maxlength="50" class="form-control">
                         </div>
-
                         <div class="form-group">
                             <label class="control-label" for="loginPassword">Password</label>
                             <input id="loginPassword" name="password" type="password" maxlength="25" class="form-control" placeholder="at least 8 characters" >
+                            <input type="checkbox" onclick="show_pass()">Show Password
                         </div>
-
                         <div class="form-group">
                             <button id="loginSubmit" type="submit" class="btn btn-info btn-block">Log In</button>
                         </div>
@@ -71,7 +51,6 @@
             </div>
         </div>
     </div>
-
     <script>
         async function login(event, el) {
             event.preventDefault();
@@ -93,7 +72,15 @@
                 alert("Invalid username or password");
             }
         }
+        function show_pass() {
+	        let x = document.getElementById("loginPassword");
+	        if (x.type === "password") {
+    	        x.type = "text";
+  	        }
+	        else {
+    	        x.type = "password";
+  	        }
+        }
     </script>
-
 </body>
 </html>

@@ -7,42 +7,23 @@
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 	<style>
-
 		form { margin: 0px 10px; }
-
 		h2 {
 		  margin-top: 2px;
 		  margin-bottom: 2px;
 		}
-
 		.container { max-width: 360px;
 		margin-top: 50px;
 		}
-
-		.divider {
-		  text-align: center;
-		  margin-top: 20px;
-		  margin-bottom: 5px;
-		}
-
 		.divider hr {
 		  margin: 7px 0px;
 		  width: 35%;
 		}
-
-		.left { float: left; }
-
-		.right { float: right; }
-
 	</style>
 
 </head>
 
 <body>
-
-
-<!------ Include the above in your HEAD tag ---------->
-
     <div class="container">
 		<div class="row">
 			<div class="panel panel-primary">
@@ -63,15 +44,16 @@
 						<div class="form-group">
 							<label class="control-label" for="signupPassword">Password</label>
 							<input id="signupPassword" type="password" maxlength="25" class="form-control" placeholder="at least 8 characters" length="40">
+							<input type="checkbox" onclick="show_pass()">Show Password
 						</div>
 						<div class="form-group">
 							<label class="control-label" for="signupPasswordagain">Password again</label>
 							<input id="signupPasswordagain" type="password" maxlength="25" class="form-control">
+							<input type="checkbox" onclick="show_passa_gain()">Show Password
 						</div>
 						<div class="form-group">
 							<button id="signupSubmit" type="submit" class="btn btn-info btn-block">Create your account</button>
 						</div>
-<!--						<p class="form-group">By creating an account, you agree to our <a href="#">Terms of Use</a> and our <a href="#">Privacy Policy</a>.</p>-->
 						<hr>
 						<p></p>Already have an account? <a href="/login/">Sign in</a>
 						<p>Return <a href="/home/">Home</a> </p>
@@ -100,6 +82,24 @@
            alert(" Please check your information")
 
       }
+}
+function show_pass() {
+	let x = document.getElementById("signupPassword");
+	if (x.type === "password") {
+    	x.type = "text";
+  	}
+	else {
+    	x.type = "password";
+  	}
+}
+function show_passa_gain() {
+	let x = document.getElementById("signupPasswordagain");
+	if (x.type === "password") {
+    	x.type = "text";
+  	}
+	else {
+    	x.type = "password";
+  	}
 }
 </script>
 </body>
