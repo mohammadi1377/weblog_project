@@ -6,6 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/docs-app/css/dist/mdb5/standard/core.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <style>
+      .card {
+         border: 2px solid #0a2fe3;
+         background-color: #d0f5fa;
+         padding-top: 10px;
+         margin-top: 50px;
+         height:200px;
+         text-align: center;
+      }
+
+      .card-title {
+        font-size: 40px;
+      }
+
+
+    </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -23,8 +39,15 @@
                     <a class="nav-link" href="/posts/">Posts</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Admin</a>
+                    <a class="nav-link" href="/posts/add/">Add </a>
                 </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/">Admin</a>
+                </li>
+
+
                 <li class="nav-item">
                     <a class="nav-link" href="/about/">About US</a>
                 </li>
@@ -39,21 +62,24 @@
         </ul>
     </div>
 </nav>
+
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            {% for post in posts %}
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h3 class="card-title">Post Title: {{ post.title }}</h3>
-                        <p class="card-text">In this post, we learn about {{ post.title }}</p>
-                        <p class="card-text"></p>>
-                        <p class="text-muted">By {{ post.owner.name }} | {{ post.created_at }}</p>
-                    </div>
-                </div>
-            {% endfor %}
+  <div class="row">
+    <div class="col-md-12">
+      {% for post in posts %}
+        <div class="card mb-4">
+          <div class="card-body">
+            <h3 class="card-title">Post Title: {{ post.title }}</h3>
+            <p class="card-text">In this post, we learn about {{ post.title }}</p>
+            <p class="card-text">
+              <p class="text-muted">By {{ post.owner.name }} | {{ post.created_at }}</p>
+            </p>
+          </div>
         </div>
+      {% endfor %}
     </div>
+  </div>
 </div>
+
 </body>
 </html>
