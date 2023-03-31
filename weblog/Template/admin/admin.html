@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Admin</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.3.1/cerulean/bootstrap.min.css">
+
+    <!-- Your custom styles -->
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .nav {
+            background-color: royalblue !important;
+            border-top-right-radius: 15px;
+            border-bottom-right-radius: 15px;
+            min-height: 260px;
+            /*padding-right: 10px;*/
+        }
+
+        .nav_total {
+            background-color: royalblue !important;
+            border-top-right-radius: 15px;
+            border-bottom-right-radius: 15px;
+            min-height: 260px;
+        }
+
+        .my_content {
+            height: 100%;
+        }
+
+        .content {
+            position: relative;
+            padding-left: 0;
+            padding-right: 25px;
+        }
+
+        /*.line {*/
+        /*    position: absolute;*/
+        /*    top: 0;*/
+        /*    left: 0;*/
+        /*    height: 100%;*/
+        /*    width: 2px;*/
+        /*    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 123, 255, 1) 50%, rgba(0, 0, 0, 0) 100%);*/
+        /*    !*background: linear-gradient(90deg, rgba(172,167,255,1) 0%, rgba(0,123,255,1) 4%, rgba(0,123,255,1) 96%, rgba(172,167,255,1) 100%);*!*/
+        /*    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);*/
+
+        /*}*/
+
+        .center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /*height: 100vh;*/
+            /*width: 100px;*/
+            /*background-color: #fff;*/
+            /*border-left: 10px solid;*/
+            /*border-image: linear-gradient(to bottom, #4c4c4c, rgba(76, 76, 76, 0)) 1 100%;*/
+
+        }
+
+        /*.content::before {*/
+        /*    margin-right: 10px;*/
+        /*    content: "";*/
+        /*    position: absolute;*/
+        /*    top: 0;*/
+        /*    bottom: 0;*/
+        /*    left: -10px;*/
+        /*    width: 3px;*/
+        /*    background: linear-gradient(to bottom, #3e61b3, rgba(76, 76, 76, 0));*/
+        /*    !*border-radius: 20%;*!*/
+        /*}*/
+
+        /*.content:after {*/
+        /*    content: "";*/
+        /*    position: absolute;*/
+        /*    bottom: 0;*/
+        /*    left: -10px;*/
+        /*    width: 10px;*/
+        /*    height: 20px;*/
+        /*    background: linear-gradient(to bottom, rgba(76, 76, 76, 0), #4c4c4c);*/
+        /*}*/
+        .container-fluid {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .sidebar {
+            flex: 0 0 25%;
+            /* Set the width of the sidebar here */
+            background-color: #f1f1f1;
+        }
+
+        .content {
+            flex: 1;
+            /* This will make the content take up the remaining space */
+            background-color: #fff;
+        }
+
+    </style>
+
+</head>
+<body>
+<div class="container-fluid p-0">
+    <div class="row">
+        <nav class="col-md-2 col-sm-12 d-none d-md-block sidebar my_content nav_total">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <br>
+                        <div class="row justify-content-center">
+                            <h3 class="text-light">Admin page</h3>
+                        </div>
+                        <br>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active text-light" href="admin.html">
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="posts.html">
+                            Posts
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="contactUs_messages.html">
+                            contact us messages
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="unconfirmed_comments.html">
+                            unconfirmed comments
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <hr>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="../home.html">
+                            Home page
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="../writer/writer.html">
+                            Writer page
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="../about.html">
+                            About us page
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-info" href="#">
+                            Log out
+                        </a>
+                    </li>
+                    <!--                    <li class="nav-item">-->
+                    <!--                        <br><br><br>-->
+                    <!--                        <div class="row justify-content-center">-->
+                    <!--                            <div class="col-6">-->
+                    <!--                                <button class="btn btn-info btn-block">Logout</button>-->
+                    <!--                                <br>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                    </li>-->
+                </ul>
+            </div>
+        </nav>
+        <div class="col-md-10 col-sm-12 ">
+            <div class="content" style="margin-top: 30px">
+                <!--                <h1 class="text-info">Dashboard</h1>-->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h1>Dashboard</h1>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="d-flex align-items-center justify-content-end" style="padding-left: 580px">
+                                <b class="mb-0" id="admin-name">Ali Alizadeh</b>
+                                <img src="./photos/profile-photo.png" class="rounded-circle mr-2" width="60"
+                                     height="60">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row" style="margin-top: 40px">
+                    <div class="col-sm-3 col-md-3">
+                        <div class="card bg-Secondary w-100" style="margin-right: 10px">
+                            <div class="card-body">
+                                <h5 class="card-title text-info">Total posts:</h5>
+                                <!--                                <p class="card-text"> 200</p>-->
+                                <!--                                <h2>&emsp;200 <h6> &nbsp;posts</h6></h2>-->
+                                <h1 id="posts-num" class="text-center" style="margin-bottom: 0;">214301</h1><h6
+                                    class="text-center">&emsp;posts</h6><br style="margin-bottom: 0">
+                                <!--                                <a href="#" class="btn btn-info float-right " style="min-width: 45px;">&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;all posts&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;&nbsp;</a>-->
+                                <div class="center">
+                                    <a href="posts.html" class="btn btn-info float-right " style="width: 100%">all posts</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-md-3">
+                        <div class="card bg-Secondary w-100">
+                            <div class="card-body">
+                                <h5 class="card-title text-info">My posts:</h5>
+                                <!--                                <p class="card-text"> 200</p>-->
+                                <!--                                <h2>&emsp;200 <h6> &nbsp;posts</h6></h2>-->
+                                <h1 id="myPosts-num" class="text-center" style="margin-bottom: 0;">100</h1><h6
+                                    class="text-center">&emsp;my posts</h6><br style="margin-bottom: 0">
+                                <div class="center">
+                                    <a href="myPosts.html" class="btn btn-info float-right " style="width: 100%">my posts</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-md-3">
+                        <div class="card bg-Secondary w-100">
+                            <div class="card-body">
+                                <h5 class="card-title text-info">Unconfirmed comments:</h5>
+                                <!--                                <p class="card-text"> 200</p>-->
+                                <!--                                <h2>&emsp;200 <h6> &nbsp;posts</h6></h2>-->
+                                <h1 id="comments-num" class="text-center" style="margin-bottom: 0;">3453</h1><h6
+                                    class="text-center">&emsp;comments</h6><br style="margin-bottom: 0">
+                                <div class="center">
+                                    <a href="unconfirmed_comments.html" class="btn btn-info float-right " style="width: 100%">unconfirmed
+                                        comments</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-md-3">
+                        <div class="card bg-Secondary w-100">
+                            <div class="card-body">
+                                <h5 class="card-title text-info">Contact us messages:</h5>
+                                <!--                                <p class="card-text"> 200</p>-->
+                                <!--                                <h2>&emsp;200 <h6> &nbsp;posts</h6></h2>-->
+                                <h1 id="contactUs-num" class="text-center" style="margin-bottom: 0;">54786</h1><h6
+                                    class="text-center">&emsp;user messages</h6><br style="margin-bottom: 0">
+                                <div class="center">
+                                    <a href="contactUs_messages.html" class="btn btn-info float-right " style="width: 100%">messages</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card" style="margin-top: 25px">
+                    <div class="card-header">
+                        Quote
+                    </div>
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                            <p>Freedom is the will to be responsible to ourselves. It is to preserve the distance which
+                                separates us from other men. To grow more indifferent to hardship, to severity, to
+                                privation, and even to life itself. To be proud and sure of ourselves without
+                                selfishness. To be so free in spirit that we can truly love the one we love. To
+                                apprehend the beauty of the earth in silence. To feel the joy of solitude. To be able to
+                                withstand criticism without resentment and to refuse praise without arrogance. To be
+                                able to hear, to see, and to feel, and never to forget that these sensations are a gift
+                                from God and constitute the real meaning of life.</p>
+                            <footer class="blockquote-footer"><cite title="Source Title">Michael Oakeshott</cite>
+                            </footer>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

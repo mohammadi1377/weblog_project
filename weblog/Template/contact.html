@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<title>Contact Form 01</title>
+	<title>Contact_us</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/docs-app/css/dist/mdb5/standard/core.min.css">
@@ -16,26 +16,26 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarColor02">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item active">
-                    <a class="nav-link" aria-current="page" href="home.html">Home</a>
+                <li class="nav-item ">
+                    <a class="nav-link" aria-current="page" href="/home/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="posts.html">Posts</a>
+                    <a class="nav-link" href="/posts/">Posts</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Admin</a>
+                    <a class="nav-link" href="/admin/">Admin</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="about.html">About US</a>
+                    <a class="nav-link" href="/about/">About US</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="contact.html">Contact Us</a>
+                    <a class="nav-link" href="/contact/">Contact Us</a>
                 </li>
             </ul>
         </div>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="signup.html" class="bg-primary"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a href="login.html" class="bg-primary"><span class="glyphicon glyphicon-log-in" ></span> Login</a></li>
+            <li><a href="/signup/" class="bg-primary"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li><a href="/login/" class="bg-primary"><span class="glyphicon glyphicon-log-in" ></span> Login</a></li>
         </ul>
     </div>
 </nav>
@@ -104,5 +104,18 @@
 		</div>
 	</div>
 </section>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.getElementById('contactForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'Your message has been sent.',
+            confirmButtonText: 'OK'
+        });
+    });
+</script>
+
 </body>
 </html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Admin_users</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.3.1/cerulean/bootstrap.min.css">
+
+
+    <style>
+        .nav {
+            background-color: royalblue !important;
+            border-top-right-radius: 15px;
+            border-bottom-right-radius: 15px;
+            min-height: 260px;
+            margin-top: 50px;
+        }
+
+        .nav_total {
+            background-color: royalblue !important;
+
+        }
+
+        .my_content {
+            height: 200%;
+        }
+
+        .content {
+            position: relative;
+            padding-left: 0;
+            padding-right: 25px;
+        }
+
+
+
+        .center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+
+        .container-fluid {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .sidebar {
+            flex:0 0 25%;
+            /* Set the width of the sidebar here */
+            background-color: #f1f1f1;
+        }
+
+        .content {
+            flex: 1;
+            /* This will make the content take up the remaining space */
+            background-color: #fff;
+        }
+
+    </style>
+
+</head>
+<body>
+<div class="container-fluid p-0">
+    <div class="row">
+        <nav class="col-md-2 col-sm-12 d-none d-md-block sidebar my_content nav_total">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <br>
+                        <div class="row justify-content-center">
+                            <h3 class="text-light">Admin page</h3>
+                        </div>
+                        <br>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active text-light" href="/admin/">
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="/admin/posts/">
+                            Posts
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="/admin/users/">
+                            Users
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="admin/contact_us/">
+                            contact us messages
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="/admin/notaccepted/">
+                            unconfirmed comments
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <hr>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="/home/">
+                            Home page
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="/about/">
+                            About us page
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-info" href="/logout/">
+                            Log out
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+        <div class="col-md-10 col-sm-12 ">
+            <div class="content" style="margin-top: 30px">
+                <!--                <h1 class="text-info">Dashboard</h1>-->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h1>Users</h1>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="d-flex align-items-center justify-content-end" style="padding-left: 483px">
+                                <b class="mb-0" id="admin-name">Admin</b>
+<!--                                <img src="./photos/profile-photo.png" class="rounded-circle mr-2" width="60" height="60">-->
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--                write messages display here-->
+
+                <main class="container my-4">
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Name</th>
+                    <th>role</th>
+                    <th>Email</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+            {% for user in users %}
+				<tr>
+
+                    <td>{{user.name}}</td>
+                    <td>{{user.role}}</td>
+					<td>{{user.email}}</td>
+					<td>
+
+						<button class="btn btn-danger" id="{{user.id}}" onclick="delete_user(event, this)">Delete</button>
+<!--                        <button class="btn btn-warning" id="{{user.role}}" onclick="change_role(event, this)">Change Role</button>-->
+					</td>
+				</tr>
+            {% endfor %}
+
+			</tbody>
+		</table>
+	</main>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+async function delete_user(event,el){
+    event.preventDefault()
+    const response = await fetch("/users/{user.id}", {
+    method: "DELETE",
+    headers: {
+    'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+    id: el.id
+    })
+    })
+    if (response.status === 200){
+    alert("User deleted successfully!!!")
+    window.location.replace("/admin/users/")
+    } else {
+    alert("Could not delete...")
+}
+}
+</script>
+<!--<script>-->
+<!--async function change_role(event,el){-->
+<!--    event.preventDefault()-->
+<!--    const response = await fetch("/admin/{user.id}", {-->
+<!--    method: "PACH",-->
+<!--    headers: {-->
+<!--    'Content-Type': 'application/json'-->
+<!--    }, -->
+<!--    body: JSON.stringify({-->
+<!--    id: el.id-->
+<!--    })-->
+<!--    })-->
+<!--    if (response.status === 200){-->
+<!--    alert("User deleted successfully!!!")-->
+<!--    window.location.replace("/admin/users/")-->
+<!--    } else {-->
+<!--    alert("Could not delete...")-->
+<!--}-->
+<!--}-->
+<!--</script>-->
+</body>
+</html>
