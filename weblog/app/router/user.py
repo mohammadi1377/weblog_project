@@ -28,7 +28,7 @@ def create_user(user: CreateUserSchema, db: Session = Depends(get_db)):
     return new_user
 
 
-@router.patch("/user/{id}", response_model=UserSchemaOut, status_code=200)
+@router.patch("/{id}", response_model=UserSchemaOut, status_code=200)
 async def update(user_id: int, user: CreateUserSchema, db: Session = Depends(get_db)):
     update_user = db.query(User).get(user_id)
 
@@ -41,7 +41,8 @@ async def update(user_id: int, user: CreateUserSchema, db: Session = Depends(get
     return update_user
 
 
-@router.delete('/user/{id}', status_code=200)
+
+@router.delete('/{id}', status_code=200)
 async def delete_user(user_id: int, db: Session = Depends(get_db), current_user: User = Depends(oauth2.get_current_user)):
 
     if current_user.role not in ['admin', 'superuser']:
