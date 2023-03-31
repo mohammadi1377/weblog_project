@@ -35,7 +35,7 @@ async def get_posts(request: Request, db: Session = Depends(get_db)):
 @router.get("/add/")
 def add(request: Request):
     return template.TemplateResponse(
-        "add.html",
+        "add.html.html",
         {"request": request}
     )
 

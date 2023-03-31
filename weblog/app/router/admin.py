@@ -63,6 +63,18 @@ def comments(request: Request, db: Session = Depends(get_db)):
     )
 
 
+@router.get("/writer/")
+def comments(request: Request, db: Session = Depends(get_db)):
+    db_posts = db.query(Post).all()
+    num = len(db_posts)
+    return template.TemplateResponse(
+        "writer.html",
+        {"request": request,
+         "posts": db_posts
+         }
+    )
+
+
 @router.get("/unconfirmed_comments/")
 def comments(request: Request, db: Session = Depends(get_db)):
     db_comments = db.query(Comment).filter(Comment.accepted == "False").all()
